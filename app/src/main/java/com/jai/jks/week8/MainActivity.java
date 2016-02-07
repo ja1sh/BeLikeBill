@@ -35,7 +35,7 @@ public class MainActivity extends AppCompatActivity  {
     private Bitmap mback, mbill;
     private EditText mText;
     private String mString;
-    private TextPaint mPaint;
+
 
     private static final int REQUEST_WRITE_STORAGE = 1;
 
@@ -83,31 +83,38 @@ public class MainActivity extends AppCompatActivity  {
     public void btn(View v){
         mString = mText.getText().toString();
         mback = BitmapFactory.decodeResource(getResources(), R.drawable.back);
-        mbill = BitmapFactory.decodeResource(getResources(), R.drawable.bill_1);
-        Bitmap resized = Bitmap.createScaledBitmap(mbill,550,550, false);
+        mbill = BitmapFactory.decodeResource(getResources(), R.drawable.bill_17);
+        Bitmap resizedBill = Bitmap.createScaledBitmap(mbill,550,550, false);
         Bitmap resizedBack = Bitmap.createScaledBitmap(mback, 800, 800, false);
 
         mBitmap = Bitmap.createBitmap(800, 800, Bitmap.Config.ARGB_8888);
         mCanvas = new Canvas(mBitmap);
-        mPaint = new TextPaint();
-        mCanvas.drawBitmap(resizedBack, 0, 0, null);
-        mCanvas.drawBitmap(resized, 250, 100, null);
-        mPaint.setTextSize(45);
-        mPaint.setStyle(Paint.Style.FILL);
-        mPaint.setColor(0xff191919);
-        mPaint.setAntiAlias(true);
-        mPaint.setDither(true);
-        Rect bounds = new Rect();
-        StaticLayout sl = new StaticLayout(mString, mPaint, bounds.width(),
-                Layout.Alignment.ALIGN_CENTER, 10, 10, true);
-        mCanvas.save();
-        float textYCoordinate = bounds.top;
-        float textXCoordinate = bounds.left;
-        mCanvas.translate(textXCoordinate, textYCoordinate);
 
-        sl.draw(mCanvas);
+        mCanvas.drawBitmap(resizedBack, 0, 0, null);
+
+        //random file from array should point here for version 1.2
+        mCanvas.drawBitmap(resizedBill, 300, 100, null);
+
+
+        TextPaint mTextPaint=new TextPaint();
+        StaticLayout mTextLayout = new StaticLayout(mString, mTextPaint, 100, Layout.Alignment.ALIGN_NORMAL, 1.0f, 28.0f, false);
+        mTextPaint.setTextSize(40);
+        mTextPaint.setAntiAlias(true);
+        mTextPaint.setDither(true);
+        mTextPaint.setStyle(TextPaint.Style.FILL);
+
+        mTextPaint.setColor(0xff191919);
+
+        mCanvas.save();
+        // calculate x and y position where your text will be placed
+
+        int textX = 60;
+        int textY = 95;
+
+        mCanvas.translate(textX, textY);
+        mTextLayout.draw(mCanvas);
         mCanvas.restore();
-        //mCanvas.drawText(mString, 100, 150, mPaint);
+
 
         mImageView = (ImageView) findViewById(R.id.imageView);
         mImageView.setImageBitmap(mBitmap);
