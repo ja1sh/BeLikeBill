@@ -7,14 +7,17 @@ import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
+
 import android.graphics.Paint;
-import android.graphics.Rect;
+import android.graphics.Typeface;
+import android.graphics.drawable.BitmapDrawable;
 import android.net.Uri;
 import android.os.Environment;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.text.DynamicLayout;
 import android.text.Layout;
 import android.text.StaticLayout;
 import android.text.TextPaint;
@@ -44,6 +47,8 @@ public class MainActivity extends AppCompatActivity  {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+
 
         mText = (EditText) findViewById(R.id.editText);
 
@@ -80,10 +85,30 @@ public class MainActivity extends AppCompatActivity  {
 
 
 
+
     public void btn(View v){
+
+        int [] i = {
+                R.drawable.bill_1, R.drawable.bill_2,
+                R.drawable.bill_3, R.drawable.bill_4,
+                R.drawable.bill_5, R.drawable.bill_6,
+                R.drawable.bill_7, R.drawable.bill_8,
+                R.drawable.bill_9, R.drawable.bill_10,
+                R.drawable.bill_11, R.drawable.bill_12,
+                R.drawable.bill_13, R.drawable.bill_14,
+                R.drawable.bill_15, R.drawable.bill_16,
+                R.drawable.bill_17, R.drawable.bill_18,
+                R.drawable.bill_19, R.drawable.bill_20,
+
+        };
+        Random ran = new Random();
+        int n = ran.nextInt(i.length);
+
+        Toast.makeText(getApplicationContext(), "Tap again to change Bill", Toast.LENGTH_LONG).show();
         mString = mText.getText().toString();
         mback = BitmapFactory.decodeResource(getResources(), R.drawable.back);
-        mbill = BitmapFactory.decodeResource(getResources(), R.drawable.bill_17);
+        //BitmapDrawable bd = (BitmapDrawable) getApplicationContext().getResources().getDrawable(i[n]);
+        mbill = BitmapFactory.decodeResource(getResources(), i[n]);
         Bitmap resizedBill = Bitmap.createScaledBitmap(mbill,550,550, false);
         Bitmap resizedBack = Bitmap.createScaledBitmap(mback, 800, 800, false);
 
@@ -97,10 +122,13 @@ public class MainActivity extends AppCompatActivity  {
 
 
         TextPaint mTextPaint=new TextPaint();
-        StaticLayout mTextLayout = new StaticLayout(mString, mTextPaint, 100, Layout.Alignment.ALIGN_NORMAL, 1.0f, 28.0f, false);
-        mTextPaint.setTextSize(40);
+        DynamicLayout mTextLayout = new DynamicLayout(mString, mTextPaint, 115, Layout.Alignment.ALIGN_NORMAL, 1.0f, 28.0f, true);
+        mTextPaint.setTextSize(45);
         mTextPaint.setAntiAlias(true);
         mTextPaint.setDither(true);
+        Typeface plain = Typeface.createFromAsset(getAssets(), "fonts/dead_end.ttf");
+
+        mTextPaint.setTypeface(plain);
         mTextPaint.setStyle(TextPaint.Style.FILL);
 
         mTextPaint.setColor(0xff191919);
